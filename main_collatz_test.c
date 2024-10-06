@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "collatz.c"
 
 int main(int argc, char *argv[]) {
     if (argc != 4) {
-        printf("Wrong amount of arguments...");
+        printf("Wrong amount of arguments...\n");
         return 1;
     }
 
@@ -13,14 +12,42 @@ int main(int argc, char *argv[]) {
     int MIN = atoi(argv[2]);
     int MAX = atoi(argv[3]);
 
-    if (N > MAX || N < MIN) {
-        printf("The number is not between the min and max: %d", N);
-        return 0;
+    if (N <= 0 || MIN >= MAX) {
+        printf(
+            "Invalid arguments: N must be positive and MIN must be less than "
+            "MAX.\n");
+        return 1;
     }
 
-    for (unsigned long long int ix = 0; ix < N; ++ix) {
-        int num = rand() % (MAX - MIN + 1) + MIN;
+    srand(time(NULL));
+
+    FILE *file = fopen("output.csv", "w");
+    if (file == NULL) {
+        printf("Could not open file for writing.\n");
+        return 1;
     }
 
-    
+    fprintf(file, "RandomNumber,Steps\n");
+
+    for (int i = 0; i < N; i++) {
+        int RN = MIN + rand() % (MAX - MIN + 1);
+        int steps = 0;
+        int current = RN;
+
+        while (current != 1) {
+            if (current % 2 == 0) {
+                current /= 2;
+            } else {
+                current = 3 * current + 1;
+            }
+            steps++;
+        }
+
+        fprintf(file, "%d,%d\n", RN, steps);
+    }
+
+    fclose(file);
+    printf("Results written to output.csv\n");
+
+    return 0;
 }

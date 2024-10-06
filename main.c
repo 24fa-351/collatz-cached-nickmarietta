@@ -1,36 +1,53 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
-// main function takes:
-/*
+#include "fifo_cache.h"
+#include "lru_cache.h"
+#include "main_functions.h"
+#include "global_var.h"
 
-1. Number of values to test N
-2. Smallest value to test (MIN)
-3. Largest value to test (MAX)
+unsigned long long hits = 0;
+unsigned long long misses = 0;
 
-THEN:
-    perform this for N random numbers (use rand())
-    Exercise time command and large enough N to be interesting (100, 1000, 1M) to report in 
-    one tab of a GSheet and estimate the mean time for each number to be processed
-    given the MIN and MAX
-
-*/
-int main(int argc, char *argv[]) {
-    if (argc != 4) {
-        printf("Wrong amount of arguments...");
+int main(int argc, char* argv[]) {
+    if (argc != 6) {
+        printf("Wrong amount of arguments...\n");
         return 1;
     }
 
-    int N = atoi(argv[1]);
-    int MIN = atoi(argv[2]);
-    int MAX = atoi(argv[3]);
+    unsigned long long N = atoi(argv[1]);
+    unsigned long long MIN = atoi(argv[2]);
+    unsigned long long MAX = atoi(argv[3]);
+    // assign cachetype to the 4th argument
+    char cacheType = argv[4][0];
+    unsigned long long cacheSize = atoi(argv[5]);
 
-    if (N > MAX || N < MIN) {
-        printf("The number is not between the min and max: %d", N);
-        return 0;
+    if (N <= 0 || MIN >= MAX) {
+        printf(
+            "Invalid arguments: N must be positive and MIN must be less than "
+            "MAX.\n");
+        return 1;
     }
 
+    srand(time(NULL));
 
+    // prompt user for cache type
+    if (tolower(cacheType) == 'f') {
+        printf("This is the FIFO Cache\n");
+    } else if (cacheType == 'l') {
+        printf("This is the LRU Cache\n");
+        LRUCache* tempCache = lru_cache_init(cacheSize);
+        print_LRU(tempCache);
+        free(tempCache);
+    } else {
+        printf("Invalid cache type...\n");
+        return 1;
+    }
 
+    print_cache_ratio(hits, misses);
+
+    
 }

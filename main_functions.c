@@ -31,7 +31,7 @@ unsigned long long run_lru_collatz(LRUCache* cache, unsigned long long N,
                                    unsigned long long MAX) {
     unsigned long long randomNum = MIN + (rand() % (MAX - MIN + 1));
     for (unsigned long long ix = 0; ix < N; ix++) {
-        unsigned long long value = LRU_lookup(cache, randomNum);
+        unsigned long long value = LRU_get(cache, randomNum);
         if (value == -1) {
             value = collatz(randomNum);
             LRU_insert(cache, randomNum, value);

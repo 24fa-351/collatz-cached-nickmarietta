@@ -5,9 +5,10 @@
 #include <time.h>
 
 #include "fifo_cache.h"
+#include "global_var.h"
 #include "lru_cache.h"
 #include "main_functions.h"
-#include "global_var.h"
+
 
 unsigned long long hits = 0;
 unsigned long long misses = 0;
@@ -48,6 +49,4 @@ int main(int argc, char* argv[]) {
     }
 
     print_cache_ratio(hits, misses);
-
-    
 }

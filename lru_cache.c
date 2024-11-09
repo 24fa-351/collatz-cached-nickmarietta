@@ -1,12 +1,14 @@
 #include "lru_cache.h"
-
 #include "global_var.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 LRUCache* lru_cache_init(unsigned long long size) {
     LRUCache* cache = malloc(sizeof(LRUCache));
     cache->cacheNotries = (CacheNotry*)malloc(sizeof(CacheNotry) * size);
-    cache->capacity = capacity;
+    cache->capacity = size;
     cache->size = 0;
     return cache;
 }

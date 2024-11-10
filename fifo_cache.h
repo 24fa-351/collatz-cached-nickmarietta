@@ -1,17 +1,8 @@
 #ifndef FIFO_CACHE_H
 #define FIFO_CACHE_H
-/*
-CACHE INTERFACE
-Primary:
-    ○ initialize(providerFunc)
-    ○ lookup(key) -> data, or “not present”
-    ○ insert(key, data)
-    ○ countOfEntries()
-Support/Internal:
-    ○ findEntryToEvict()
-    ○ evict(entry)
-    ○ update(entry)
-*/
+
+extern unsigned long long hits;
+extern unsigned long long misses;
 
 typedef struct {
     unsigned long long key;

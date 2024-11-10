@@ -43,7 +43,7 @@ unsigned long long run_lru_collatz(LRUCache* cache, unsigned long long N,
         unsigned long long randomNum = randomNumGen(MIN, MAX);
         unsigned long long value = LRU_get(cache, randomNum);
         if (value == -1) {
-            // Calculate Collatz steps if not found in cache
+            // calculate Collatz steps if not found in cache
             value = collatz(randomNum);
             LRU_insert(cache, randomNum, value);
         }
@@ -53,6 +53,28 @@ unsigned long long run_lru_collatz(LRUCache* cache, unsigned long long N,
     // print cache hit ratio
     print_cache_ratio(hits, misses);
 
+    return 0;
+}
+
+unsigned long long run_FIFO_collatz(FIFOCache* cache, unsigned long long N,
+                                    unsigned long long MIN,
+                                    unsigned long long MAX) {
+    for (unsigned long long ix = MIN; ix <= MAX && ix < N; ix++) {
+        unsigned long long value = collatz(ix);
+        FIFO_insert(cache, ix, value);
+    }
+    for (unsigned long long ix = 0; ix < N; ix++) {
+        // make a new random number for each iteration
+        unsigned long long randomNum = randomNumGen(MIN, MAX);
+        unsigned long long value = FIFO_get(cache, randomNum);
+        if (value == -1) {
+            // calculate Collatz steps if not found in cache
+            value = collatz(randomNum);
+            FIFO_insert(cache, randomNum, value);
+        }
+        printf("Number: %llu, Collatz steps: %llu\n", randomNum, value);
+    }
+    print_cache_ratio(hits, misses);
     return 0;
 }
 

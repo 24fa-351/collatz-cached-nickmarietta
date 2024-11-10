@@ -1,4 +1,5 @@
 #include "fifo_cache.h"
+#include "global_var.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -9,23 +10,21 @@ FIFOCache* fifo_cache_init(unsigned long long size) {
     cache->cacheNotries = (FIFOCacheNotry*)malloc(sizeof(FIFOCacheNotry) * size);
     cache->size = size;
     cache->current = 0;
-    cache->hits = 0;
-    cache->misses = 0;
     return cache;
 }
 
-unsigned long long lookup(FIFOCache* cache, unsigned long long key) {
+unsigned long long FIFO_get(FIFOCache* cache, unsigned long long key) {
     for (unsigned long long ix = 0; ix < cache->size; ix++) {
         if (cache->cacheNotries[ix].key == key) {
-            cache->hits++;
+            hits++;
             return cache->cacheNotries[ix].value;
         }
     }
-    cache->misses++;
+    misses++;
     return -1;
 }
 
-void insert(FIFOCache* cache, unsigned long long key, unsigned long long value) {
+void FIFO_insert(FIFOCache* cache, unsigned long long key, unsigned long long value) {
     if (cache->current == cache->size) {
         pop(cache);
     }

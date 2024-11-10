@@ -11,9 +11,6 @@ unsigned long long run_lru_collatz(LRUCache* cache, unsigned long long N,
                                    unsigned long long MIN,
                                    unsigned long long MAX);
 
-void output_lru(LRUCache* cache, unsigned long long N, unsigned long long MIN,
-                unsigned long long MAX);
-
 unsigned long long run_FIFO_collatz(FIFOCache* cache, unsigned long long N,
                                     unsigned long long MIN,
                                     unsigned long long MAX);

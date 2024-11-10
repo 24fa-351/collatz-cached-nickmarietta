@@ -4,11 +4,10 @@
 #include <string.h>
 #include <time.h>
 
-#include "fifo_cache.h"
+#include "fifo_cache.c"
 #include "global_var.h"
-#include "lru_cache.h"
-#include "main_functions.h"
-
+#include "lru_cache.c"
+#include "main_functions.c"
 
 unsigned long long hits = 0;
 unsigned long long misses = 0;
@@ -38,11 +37,14 @@ int main(int argc, char* argv[]) {
     // prompt user for cache type
     if (tolower(cacheType) == 'f') {
         printf("This is the FIFO Cache\n");
+        FIFOCache* tempCache = fifo_cache_init(cacheSize);
+        //run_FIFO_collatz(tempCache, N, MIN, MAX);
+        freeFIFOCache(tempCache);
     } else if (cacheType == 'l') {
         printf("This is the LRU Cache\n");
         LRUCache* tempCache = lru_cache_init(cacheSize);
-        print_LRU(tempCache);
-        free(tempCache);
+        run_lru_collatz(tempCache, N, MIN, MAX);
+        LRU_free(tempCache);
     } else {
         printf("Invalid cache type...\n");
         return 1;

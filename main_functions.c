@@ -16,12 +16,14 @@ unsigned long long collatz(unsigned long long int N) {
         } else {
             newN = 3 * N + 1;
         }
+        N = newN;
         amt_steps++;
     }
-    return newN;
+    return amt_steps;
 }
 
-unsigned long long randomNumGen(unsigned long long MIN, unsigned long long MAX) {
+unsigned long long randomNumGen(unsigned long long MIN,
+                                unsigned long long MAX) {
     unsigned long long randomNum = MIN + (rand() % (MAX - MIN + 1));
     return randomNum;
 }
@@ -29,17 +31,22 @@ unsigned long long randomNumGen(unsigned long long MIN, unsigned long long MAX) 
 unsigned long long run_lru_collatz(LRUCache* cache, unsigned long long N,
                                    unsigned long long MIN,
                                    unsigned long long MAX) {
-    unsigned long long randomNum = MIN + (rand() % (MAX - MIN + 1));
     for (unsigned long long ix = 0; ix < N; ix++) {
+        // make a new random number for each iteration
+        unsigned long long randomNum = randomNumGen(MIN, MAX);
         unsigned long long value = LRU_get(cache, randomNum);
         if (value == -1) {
+            // Calculate Collatz steps if not found in cache
             value = collatz(randomNum);
             LRU_insert(cache, randomNum, value);
         }
+        printf("Number: %llu, Collatz steps: %llu\n", randomNum, value);
     }
-    unsigned long long amt_steps = collatz(randomNum);
-    print_cache_ratio(hits, misses);  // Use global hits and misses
-    return amt_steps;
+
+    // print cache hit ratio
+    print_cache_ratio(hits, misses);
+
+    return 0;
 }
 
 void print_cache_ratio(unsigned long long hits, unsigned long long misses) {

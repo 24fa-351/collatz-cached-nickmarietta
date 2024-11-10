@@ -5,12 +5,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-LRUCache* lru_cache_init(unsigned long long size) {
-    LRUCache* cache = malloc(sizeof(LRUCache));
-    cache->cacheNotries = (CacheNotry*)malloc(sizeof(CacheNotry) * size);
-    cache->capacity = size;
-    cache->size = 0;
-    return cache;
+LRUCache* lru_cache_init(unsigned long long capacity) {
+    LRUCache* lru_cache = malloc(sizeof(LRUCache));
+    lru_cache->cacheNotries = malloc(sizeof(CacheNotry) * capacity);
+    lru_cache->capacity = capacity;
+    lru_cache->size = 0;
+    return lru_cache;
 }
 
 unsigned long long LRU_get(LRUCache* cache, unsigned long long key) {

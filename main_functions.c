@@ -31,6 +31,10 @@ unsigned long long randomNumGen(unsigned long long MIN,
 unsigned long long run_lru_collatz(LRUCache* cache, unsigned long long N,
                                    unsigned long long MIN,
                                    unsigned long long MAX) {
+    for (unsigned long long ix = MIN; ix <= MAX && ix < N; ix++) {
+        unsigned long long value = collatz(ix);
+        LRU_insert(cache, ix, value);
+    }
     for (unsigned long long ix = 0; ix < N; ix++) {
         // make a new random number for each iteration
         unsigned long long randomNum = randomNumGen(MIN, MAX);

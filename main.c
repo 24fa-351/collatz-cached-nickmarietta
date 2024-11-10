@@ -50,5 +50,4 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    print_cache_ratio(hits, misses);
 }

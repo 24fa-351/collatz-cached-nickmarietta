@@ -16,18 +16,21 @@ unsigned long long collatz(unsigned long long int N) {
         } else {
             newN = 3 * N + 1;
         }
+        // reupdate the value of N
         N = newN;
         amt_steps++;
     }
     return amt_steps;
 }
 
+// function to get easy random num
 unsigned long long randomNumGen(unsigned long long MIN,
                                 unsigned long long MAX) {
     unsigned long long randomNum = MIN + (rand() % (MAX - MIN + 1));
     return randomNum;
 }
 
+// helper function called in main.c to run LRU cache
 unsigned long long run_lru_collatz(LRUCache* cache, unsigned long long N,
                                    unsigned long long MIN,
                                    unsigned long long MAX) {

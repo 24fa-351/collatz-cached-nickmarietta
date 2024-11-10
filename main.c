@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
     if (tolower(cacheType) == 'f') {
         printf("This is the FIFO Cache\n");
         FIFOCache* tempCache = fifo_cache_init(cacheSize);
-        //run_FIFO_collatz(tempCache, N, MIN, MAX);
+        // run_FIFO_collatz(tempCache, N, MIN, MAX);
         freeFIFOCache(tempCache);
     } else if (cacheType == 'l') {
         printf("This is the LRU Cache\n");
@@ -49,5 +49,4 @@ int main(int argc, char* argv[]) {
         printf("Invalid cache type...\n");
         return 1;
     }
-
 }

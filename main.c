@@ -18,6 +18,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    // how to run: ./main N MIN MAX cacheType cacheSize
     unsigned long long N = atoi(argv[1]);
     unsigned long long MIN = atoi(argv[2]);
     unsigned long long MAX = atoi(argv[3]);
@@ -25,7 +26,7 @@ int main(int argc, char* argv[]) {
     char cacheType = argv[4][0];
     unsigned long long cacheSize = atoi(argv[5]);
 
-    if (N <= 0 || MIN >= MAX) {
+    if (N <= 0 || MIN > MAX || N > MAX) {
         printf(
             "Invalid arguments: N must be positive and MIN must be less than "
             "MAX.\n");

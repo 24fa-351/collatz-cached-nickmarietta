@@ -20,9 +20,9 @@ typedef struct {
 
 FIFOCache* fifo_cache_init(unsigned long long size);
 
-unsigned long long lookup(FIFOCache* cache, unsigned long long key);
+unsigned long long FIFO_get(FIFOCache* cache, unsigned long long key);
 
-void insert(FIFOCache* cache, unsigned long long key, unsigned long long value);
+void FIFO_insert(FIFOCache* cache, unsigned long long key, unsigned long long value);
 
 void countOfEntries(FIFOCache* cache);
 
